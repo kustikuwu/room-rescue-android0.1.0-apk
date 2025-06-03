@@ -1,0 +1,31 @@
+{
+  "name": "Гостиная",
+  "canvasWidth": 800,
+  "canvasHeight": 600,
+  "player": {
+    "x": 100,
+    "y": 100
+  },
+  "trash": [
+    {"x": 150, "y": 250, "type": "paper"},
+    {"x": 300, "y": 300, "type": "plastic"},
+    {"x": 400, "y": 400, "type": "glass"}
+  ],
+  "walls": [
+    {"x": 0, "y": 0, "width": 800, "height": 20},
+    {"x": 0, "y": 580, "width": 800, "height": 20},
+    {"x": 0, "y": 20, "width": 20, "height": 560},
+    {"x": 780, "y": 20, "width": 20, "height": 560},
+    {"x": 200, "y": 200, "width": 400, "height": 20}
+  ],
+  "rooms": [
+    {
+      "name": "Главная комната",
+      "x": 20,
+      "y": 20,
+      "width": 760,
+      "height": 560,
+      "color": "#3a3a3a"
+    }
+  ]
+}

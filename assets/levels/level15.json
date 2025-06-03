@@ -1,0 +1,44 @@
+{
+  "name": "Уровень 14 — Лабиринт с замками",
+  "canvasWidth": 1000,
+  "canvasHeight": 800,
+  "player": { "x": 100, "y": 100 },
+  "trash": [
+    { "x": 130, "y": 140, "type": "paper" },
+    { "x": 260, "y": 180, "type": "plastic" },
+    { "x": 370, "y": 130, "type": "glass" },
+    { "x": 480, "y": 140, "type": "paper" },
+    { "x": 720, "y": 140, "type": "plastic" },
+    { "x": 850, "y": 580, "type": "glass" },
+    { "x": 660, "y": 520, "type": "paper" },
+    { "x": 480, "y": 540, "type": "plastic" },
+    { "x": 280, "y": 550, "type": "glass" },
+    { "x": 180, "y": 650, "type": "paper" }
+  ],
+  "walls": [
+    { "x": 100, "y": 300, "width": 300, "height": 20 },
+    { "x": 400, "y": 100, "width": 20, "height": 220 },
+    { "x": 200, "y": 500, "width": 500, "height": 20 },
+    { "x": 700, "y": 200, "width": 20, "height": 300 },
+    { "x": 500, "y": 600, "width": 300, "height": 20 },
+    { "x": 800, "y": 400, "width": 20, "height": 220 }
+  ],
+  "rooms": [
+    { "name": "Входной зал", "x": 50, "y": 50, "width": 300, "height": 300, "color": "#a3c1ad" },
+    { "name": "Северная лаборатория", "x": 350, "y": 50, "width": 350, "height": 200, "color": "#d1b3c4" },
+    { "name": "Комната управления", "x": 720, "y": 100, "width": 230, "height": 200, "color": "#e3d26f" },
+    { "name": "Склад", "x": 150, "y": 500, "width": 300, "height": 200, "color": "#99c2ff" },
+    { "name": "Реакторный отсек", "x": 470, "y": 500, "width": 330, "height": 150, "color": "#ffcc99" },
+    { "name": "Финальная комната", "x": 800, "y": 500, "width": 180, "height": 250, "color": "#ff9999" }
+  ],
+  "keys": [
+    { "x": 360, "y": 140, "id": "red" },
+    { "x": 220, "y": 520, "id": "green" },
+    { "x": 640, "y": 540, "id": "blue" }
+  ],
+  "lockedDoors": [
+    { "x": 370, "y": 270, "width": 30, "height": 20, "id": "red" },
+    { "x": 690, "y": 380, "width": 30, "height": 20, "id": "green" },
+    { "x": 780, "y": 600, "width": 30, "height": 20, "id": "blue" }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "name": "Уровень 14: Лабиринт замков",
+  "canvasWidth": 1000,
+  "canvasHeight": 800,
+  "player": { "x": 60, "y": 60 },
+  "trash": [
+    { "x": 150, "y": 100, "type": "paper" },
+    { "x": 180, "y": 200, "type": "plastic" },
+    { "x": 300, "y": 120, "type": "glass" },
+    { "x": 550, "y": 250, "type": "paper" },
+    { "x": 720, "y": 150, "type": "plastic" },
+    { "x": 850, "y": 550, "type": "glass" },
+    { "x": 450, "y": 600, "type": "paper" },
+    { "x": 600, "y": 700, "type": "plastic" },
+    { "x": 220, "y": 680, "type": "glass" }
+  ],
+  "walls": [
+    { "x": 100, "y": 0, "width": 20, "height": 300 },
+    { "x": 100, "y": 300, "width": 300, "height": 20 },
+    { "x": 400, "y": 100, "width": 20, "height": 220 },
+    { "x": 500, "y": 100, "width": 300, "height": 20 },
+    { "x": 780, "y": 100, "width": 20, "height": 300 },
+    { "x": 400, "y": 400, "width": 300, "height": 20 },
+    { "x": 400, "y": 400, "width": 20, "height": 300 },
+    { "x": 200, "y": 500, "width": 200, "height": 20 },
+    { "x": 200, "y": 500, "width": 20, "height": 200 },
+    { "x": 700, "y": 500, "width": 20, "height": 200 },
+    { "x": 700, "y": 500, "width": 180, "height": 20 },
+    { "x": 880, "y": 500, "width": 20, "height": 200 }
+  ],
+  "rooms": [
+    { "name": "Вход", "x": 20, "y": 20, "width": 180, "height": 260, "color": "#E6F0FA" },
+    { "name": "Холл", "x": 100, "y": 300, "width": 320, "height": 220, "color": "#FAF3DD" },
+    { "name": "Лаборатория", "x": 420, "y": 100, "width": 360, "height": 220, "color": "#DEFDE0" },
+    { "name": "Склад", "x": 420, "y": 420, "width": 280, "height": 260, "color": "#FFE0E6" },
+    { "name": "Подвал", "x": 200, "y": 520, "width": 180, "height": 240, "color": "#D6E0F0" },
+    { "name": "Архив", "x": 720, "y": 520, "width": 160, "height": 240, "color": "#F2D7D5" }
+  ],
+  "keys": [
+    { "x": 320, "y": 340, "id": "red" },
+    { "x": 620, "y": 130, "id": "green" },
+    { "x": 220, "y": 600, "id": "blue" }
+  ],
+  "lockedDoors": [
+    { "x": 400, "y": 300, "width": 20, "height": 60, "id": "red" },
+    { "x": 780, "y": 400, "width": 20, "height": 60, "id": "green" },
+    { "x": 380, "y": 600, "width": 20, "height": 60, "id": "blue" }
+  ]
+}

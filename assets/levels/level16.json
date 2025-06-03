@@ -1,0 +1,44 @@
+{
+  "name": "Уровень 16: Цветной лабиринт",
+  "canvasWidth": 1000,
+  "canvasHeight": 800,
+  "player": { "x": 80, "y": 100 },
+  "trash": [
+    { "x": 120, "y": 120, "type": "paper" },
+    { "x": 180, "y": 160, "type": "plastic" },
+    { "x": 360, "y": 100, "type": "glass" },
+    { "x": 500, "y": 140, "type": "plastic" },
+    { "x": 700, "y": 100, "type": "paper" },
+    { "x": 820, "y": 180, "type": "glass" },
+    { "x": 160, "y": 340, "type": "plastic" },
+    { "x": 380, "y": 360, "type": "glass" },
+    { "x": 700, "y": 360, "type": "plastic" },
+    { "x": 600, "y": 680, "type": "paper" }
+  ],
+  "walls": [
+    { "x": 300, "y": 50, "width": 20, "height": 250 },
+    { "x": 600, "y": 50, "width": 20, "height": 250 },
+    { "x": 800, "y": 300, "width": 20, "height": 200 },
+    { "x": 400, "y": 600, "width": 200, "height": 20 },
+    { "x": 700, "y": 600, "width": 200, "height": 20 }
+  ],
+  "rooms": [
+    { "name": "Входной зал", "x": 50, "y": 50, "width": 250, "height": 200, "color": "#f9d976" },
+    { "name": "Зелёная комната", "x": 320, "y": 50, "width": 260, "height": 200, "color": "#a8e6cf" },
+    { "name": "Красный отсек", "x": 640, "y": 50, "width": 300, "height": 200, "color": "#ff8b94" },
+    { "name": "Нижний коридор", "x": 50, "y": 300, "width": 250, "height": 200, "color": "#c0c0aa" },
+    { "name": "Синий сектор", "x": 320, "y": 300, "width": 260, "height": 200, "color": "#87cefa" },
+    { "name": "Закрытый склад", "x": 640, "y": 300, "width": 300, "height": 200, "color": "#c2c2f0" },
+    { "name": "Финальная зона", "x": 400, "y": 640, "width": 500, "height": 120, "color": "#ffffcc" }
+  ],
+  "keys": [
+    { "x": 150, "y": 380, "id": "red" },
+    { "x": 400, "y": 400, "id": "blue" },
+    { "x": 750, "y": 140, "id": "green" }
+  ],
+  "lockedDoors": [
+    { "x": 300, "y": 200, "width": 20, "height": 100, "id": "red" },
+    { "x": 600, "y": 200, "width": 20, "height": 100, "id": "green" },
+    { "x": 800, "y": 300, "width": 20, "height": 100, "id": "blue" }
+  ]
+}

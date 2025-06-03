@@ -1,0 +1,61 @@
+{
+  "name": "Этаж 18: Секрет лаборатории",
+  "canvasWidth": 1000,
+  "canvasHeight": 800,
+  "player": { "x": 100, "y": 100 },
+
+  "trash": [
+    { "x": 130, "y": 130, "type": "paper" },
+    { "x": 210, "y": 160, "type": "plastic" },
+    { "x": 320, "y": 180, "type": "glass" },
+    { "x": 450, "y": 220, "type": "paper" },
+    { "x": 700, "y": 150, "type": "plastic" },
+    { "x": 870, "y": 300, "type": "glass" },
+    { "x": 820, "y": 700, "type": "paper" },
+    { "x": 620, "y": 600, "type": "plastic" },
+    { "x": 400, "y": 670, "type": "glass" },
+    { "x": 220, "y": 560, "type": "paper" }
+  ],
+
+  "walls": [
+    { "x": 0,   "y": 250, "width": 400, "height": 20 },
+
+    { "x": 400, "y": 0,   "width": 20,  "height": 100 },
+    { "x": 400, "y": 130, "width": 20,  "height": 140 },
+
+    { "x": 0,   "y": 600, "width": 300, "height": 20 },
+    { "x": 330, "y": 600, "width": 270, "height": 20 },
+
+    { "x": 580, "y": 400, "width": 20,  "height": 220 },
+    { "x": 600, "y": 400, "width": 400, "height": 20 },
+
+    { "x": 600, "y": 200, "width": 20,  "height": 70 },
+    { "x": 600, "y": 300, "width": 20,  "height": 100 },
+
+    { "x": 600, "y": 200, "width": 300, "height": 20 },
+    { "x": 900, "y": 200, "width": 20,  "height": 500 },
+    { "x": 700, "y": 500, "width": 200, "height": 20 }
+  ],
+
+  "rooms": [
+    { "name": "Вход",        "x": 50,  "y": 50,  "width": 350, "height": 200, "color": "#d0f0c0" },
+    { "name": "Склад",       "x": 50,  "y": 300, "width": 350, "height": 250, "color": "#f0e68c" },
+    { "name": "Коридор",     "x": 400, "y": 50,  "width": 180, "height": 600, "color": "#d3d3d3" },
+    { "name": "Лаборатория", "x": 600, "y": 50,  "width": 300, "height": 150, "color": "#add8e6" },
+    { "name": "Архив",       "x": 600, "y": 220, "width": 280, "height": 160, "color": "#dda0dd" },
+    { "name": "Секретная",   "x": 620, "y": 520, "width": 260, "height": 220, "color": "#ffe4e1" },
+    { "name": "Хранилище",   "x": 100, "y": 630, "width": 450, "height": 120, "color": "#e0ffff" }
+  ],
+
+  "keys": [
+    { "x": 420, "y": 100, "id": "red" },
+    { "x": 700, "y": 250, "id": "blue" },
+    { "x": 480, "y": 650, "id": "green" }
+  ],
+
+  "lockedDoors": [
+    { "x": 400, "y": 180, "width": 20, "height": 40, "id": "red" },
+    { "x": 600, "y": 380, "width": 20, "height": 40, "id": "blue" },
+    { "x": 580, "y": 600, "width": 20, "height": 40, "id": "green" }
+  ]
+}

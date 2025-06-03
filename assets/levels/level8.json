@@ -1,0 +1,58 @@
+{
+  "name": "Фойе и склад",
+  "canvasWidth": 1000,
+  "canvasHeight": 800,
+  "player": {
+    "x": 60,
+    "y": 60
+  },
+  "trash": [
+    {
+      "x": 100,
+      "y": 100,
+      "type": "paper"
+    },
+    {
+      "x": 700,
+      "y": 100,
+      "type": "plastic"
+    },
+    {
+      "x": 200,
+      "y": 300,
+      "type": "glass"
+    }
+  ],
+  "walls": [
+    {
+      "x": 620,
+      "y": 20,
+      "width": 20,
+      "height": 200
+    },
+    {
+      "x": 20,
+      "y": 420,
+      "width": 960,
+      "height": 20
+    }
+  ],
+  "rooms": [
+    {
+      "name": "Фойе",
+      "x": 20,
+      "y": 20,
+      "width": 600,
+      "height": 400,
+      "color": "#3a3a3a"
+    },
+    {
+      "name": "Склад",
+      "x": 640,
+      "y": 20,
+      "width": 340,
+      "height": 300,
+      "color": "#4a2a2a"
+    }
+  ]
+}

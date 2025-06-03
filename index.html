@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Room Rescue</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="src/css/style.css" />
+  <style>
+    /* Стили для нового управления */
+    #arrow-controls {
+      position: absolute;
+      bottom: 100px;
+      left: 30px;
+      display: none;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      grid-gap: 8px;
+      z-index: 50;
+    }
+
+    #gameScreen.active #arrow-controls {
+      display: grid;
+    }
+
+    .arrow-btn {
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(26, 58, 90, 0.9);
+      border: 4px solid;
+      border-top-color: #2c5a8a;
+      border-left-color: #2c5a8a;
+      border-right-color: #0a223a;
+      border-bottom-color: #0a223a;
+      box-shadow: 0 5px 0 #0a223a;
+      font-family: 'Press Start 2P', 'Courier New', monospace;
+      font-size: 24px;
+      color: #e0f0ff;
+      text-shadow: 0 0 5px rgba(0, 200, 255, 0.5);
+      border-radius: 8px;
+      transition: all 0.1s;
+      user-select: none;
+    }
+
+    .arrow-btn:active {
+      transform: translateY(5px);
+      box-shadow: 0 0 0 #0a223a;
+    }
+
+    .arrow-btn[data-dir="up"] {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .arrow-btn[data-dir="left"] {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .arrow-btn[data-dir="down"] {
+      grid-column: 2;
+      grid-row: 3;
+    }
+
+    .arrow-btn[data-dir="right"] {
+      grid-column: 3;
+      grid-row: 2;
+    }
+
+    #action-buttons {
+      position: absolute;
+      bottom: 100px;
+      right: 30px;
+      display: none;
+      gap: 30px;
+      z-index: 50;
+    }
+
+    .action-btn {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: rgba(231, 76, 60, 0.9);
+      border: 4px solid;
+      border-top-color: #ff6b6b;
+      border-left-color: #ff6b6b;
+      border-right-color: #c44;
+      border-bottom-color: #c44;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Press Start 2P', 'Courier New', monospace;
+      font-size: 24px;
+      color: white;
+      box-shadow: 0 5px 0 #c44;
+      text-shadow: 0 0 5px rgba(0, 200, 255, 0.5);
+      transition: all 0.1s;
+    }
+
+    .action-btn:active {
+      transform: translateY(5px);
+      box-shadow: 0 0 0 #c44;
+    }
+
+    #gameScreen.active #action-buttons {
+      display: flex;
+      
+    }
+
+    /* Адаптивность */
+    @media (max-width: 600px) {
+      .arrow-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+      
+      .action-btn {
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+      }
+      
+      #arrow-controls {
+        left: 20px;
+        bottom: 90px;
+      }
+      
+      #action-buttons {
+        right: 20px;
+        bottom: 90px;
+        gap: 20px;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .arrow-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+      }
+      
+      .action-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 18px;
+      }
+      
+      #arrow-controls {
+        left: 15px;
+        bottom: 80px;
+      }
+      
+      #action-buttons {
+        right: 15px;
+        bottom: 80px;
+        gap: 15px;
+      }
+    }
+
+      #rotateWarning {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 25, 41, 0.95);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #4af626;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 14px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+    <div id="coinDisplay">
+    💰 <span id="coinCount">0</span>
+  </div>
+  
+  <!-- Предупреждение о повороте -->
+  <div id="rotateWarning" style="display: none;">
+    <div class="rotate-overlay">
+      <p>Поверни телефон горизонтально</p>
+    </div>
+  </div>
+
+  <!-- Главное меню -->
+  <div id="mainMenu" class="screen active">
+    <h1>ROOM RESCUE</h1>
+    <button id="playButton">ИГРАТЬ</button>
+    <button id="shopButton">МАГАЗИН</button>
+    <button id="settingsButton">НАСТРОЙКИ</button>
+    <button id="exitButton">ВЫХОД</button>
+  </div>
+
+  <!-- Настройки -->
+  <div id="settingsMenu" class="screen">
+    <h2>НАСТРОЙКИ</h2>
+    <label>
+      ЗВУК:
+      <input type="checkbox" id="soundToggle" checked />
+    </label>
+    <button id="backFromSettings">НАЗАД</button>
+  </div>
+
+  <div id="levelCategorySelect" class="screen">
+    <h2>Выбери тип уровней</h2>
+    <div id="categoryButtons"></div>  <!-- кнопки категорий -->
+    <button id="backFromCategory">Назад</button>
+  </div>
+
+  <!-- Выбор уровня -->
+  <div id="levelSelect" class="screen">
+    <h2>Выбор уровня</h2>
+    <div id="levelButtons"></div>
+    <button id="backFromLevels">НАЗАД</button>
+  </div>
+
+  <!-- Игровой экран -->
+  <div id="gameScreen" class="screen">
+    <canvas id="gameCanvas"></canvas>
+    <progress id="trashProgress" value="0" max="0"></progress>
+    <button id="backFromGame">МЕНЮ</button>
+    
+    <div id="levelCompleteMessage" class="level-complete-message" style="display: none;">
+      <h2>УРОВЕНЬ ПРОЙДЕН!</h2>
+      <p>Уровень <span id="completedLevelNumber"></span> завершён</p>
+      <button id="continueButton">ДАЛЕЕ</button>
+    </div>
+    
+    <!-- Новое управление - стрелки -->
+    <div id="arrow-controls">
+      <div class="arrow-btn" data-dir="up">↑</div>
+      <div class="arrow-btn" data-dir="left">←</div>
+      <div class="arrow-btn" data-dir="down">↓</div>
+      <div class="arrow-btn" data-dir="right">→</div>
+    </div>
+    
+    <!-- Кнопки действий -->
+    <div id="action-buttons">
+      <div class="action-btn" data-action="a">A</div>
+      <div class="action-btn" data-action="b">B</div>
+    </div>
+  </div>
+
+  <!-- Старое мобильное управление (скрыто) -->
+  <div id="mobile-controls" style="display: none;">
+    <div class="dpad">
+      <button class="btn-control" data-dir="up">↑</button>
+      <button class="btn-control" data-dir="left">←</button>
+      <button class="btn-control" data-dir="down">↓</button>
+      <button class="btn-control" data-dir="right">→</button>
+    </div>
+    <div class="ab-buttons">
+      <button class="btn-action" data-action="a">A</button>
+      <button class="btn-action" data-action="b">B</button>
+    </div>
+  </div>
+    <!-- Магазин -->
+  <div id="shopScreen" class="screen">
+    <h2>МАГАЗИН</h2>
+  
+    <div id="shopTabs">
+      <button class="shop-tab-btn active" data-tab="colors">ЦВЕТА</button>
+      <button class="shop-tab-btn" data-tab="boosters">БУСТЕРЫ</button>
+      <button class="shop-tab-btn" data-tab="roulette">РУЛЕТКА</button>
+    </div>
+  
+    <div id="shopContent">
+      <!-- Вкладка: Цвета -->
+      <div class="shop-tab active" data-tab="colors">
+        <div id="colorShop">
+          <div class="color-category">
+            <h3>🎨 Обычные цвета</h3>
+            <div class="shop-grid"></div>
+          </div>
+          <div class="color-category">
+            <h3>💎 Редкие цвета</h3>
+            <div class="shop-grid"></div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Вкладка: Бустеры -->
+      <div class="shop-tab" data-tab="boosters">
+        <p style="margin-top: 20px;">Бустеры появятся позже...</p>
+      </div>
+  
+      <!-- Вкладка: Рулетка -->
+      <div class="shop-tab" data-tab="roulette">
+        <div class="roulette-container">
+          <div class="arrow-marker">▼</div>
+          <div class="roulette-3slots" id="roulette3Slots">
+            <div class="slot" id="slot-left"></div>
+            <div class="slot center" id="slot-center"></div>
+            <div class="slot" id="slot-right"></div>
+          </div>
+        </div>
+        <button id="spinWheelButton">КРУТИТЬ ЗА 25 💰</button>
+        <div id="rouletteResult" style="margin-top: 16px;"></div>
+      </div>
+    </div>
+  
+    <button id="backFromShop">НАЗАД</button>
+  </div>
+
+  <!-- Скрипты -->
+  <script src="src/js/storage.js"></script>
+  <script src="src/js/menu.js"></script>
+  <script src="src/js/shop.js"></script>
+  <script src="src/js/controls.js"></script>
+  <script src="src/js/resize.js"></script>
+  <script src="src/js/game.js"></script>
+  <script src="src/js/levels.js"></script>
+  
+  <!-- Упрощенная обработка localStorage -->
+  <script>
+      function checkOrientation() {
+        const isLandscape = window.innerWidth > window.innerHeight;
+        document.getElementById('rotateWarning').style.display = isLandscape ? 'none' : 'flex';
+      }
+
+      window.addEventListener('resize', checkOrientation);
+      window.addEventListener('orientationchange', checkOrientation);
+      window.addEventListener('DOMContentLoaded', checkOrientation);
+
+    (function() {
+      if (!window.localStorage) {
+        window.localStorage = {
+          getItem: () => null,
+          setItem: () => {}
+        };
+        console.warn("localStorage не доступен, используется заглушка");
+      }
+    })();
+    
+    // Обработка нового управления
+    document.addEventListener('DOMContentLoaded', function() {
+      const arrowControls = document.getElementById('arrow-controls');
+      const actionButtons = document.getElementById('action-buttons');
+      
+      // Обработка стрелок
+      document.querySelectorAll('.arrow-btn').forEach(btn => {
+        // Для сенсорных устройств
+        btn.addEventListener('touchstart', (e) => {
+          window.keys[btn.dataset.dir] = true;
+          btn.style.transform = 'translateY(5px)';
+          btn.style.boxShadow = '0 0 0 #0a223a';
+          e.preventDefault();
+        });
+        
+        btn.addEventListener('touchend', () => {
+          window.keys[btn.dataset.dir] = false;
+          btn.style.transform = 'translateY(0)';
+          btn.style.boxShadow = '0 5px 0 #0a223a';
+        });
+        
+        btn.addEventListener('touchcancel', () => {
+          window.keys[btn.dataset.dir] = false;
+          btn.style.transform = 'translateY(0)';
+          btn.style.boxShadow = '0 5px 0 #0a223a';
+        });
+        
+        // Для десктопов (если нужно тестировать на ПК)
+        btn.addEventListener('mousedown', () => {
+          window.keys[btn.dataset.dir] = true;
+          btn.style.transform = 'translateY(5px)';
+          btn.style.boxShadow = '0 0 0 #0a223a';
+        });
+        
+        btn.addEventListener('mouseup', () => {
+          window.keys[btn.dataset.dir] = false;
+          btn.style.transform = 'translateY(0)';
+          btn.style.boxShadow = '0 5px 0 #0a223a';
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+          window.keys[btn.dataset.dir] = false;
+          btn.style.transform = 'translateY(0)';
+          btn.style.boxShadow = '0 5px 0 #0a223a';
+        });
+      });
+      
+      // Обработка кнопок действий
+      document.querySelectorAll('.action-btn').forEach(btn => {
+        btn.addEventListener('touchstart', (e) => {
+          window.keys[btn.dataset.action] = true;
+          btn.style.transform = 'translateY(5px)';
+          btn.style.boxShadow = '0 0 0 #c44';
+          e.preventDefault();
+        });
+        
+        btn.addEventListener('touchend', () => {
+          window.keys[btn.dataset.action] = false;
+          btn.style.transform = 'translateY(0)';
+          btn.style.boxShadow = '0 5px 0 #c44';
+        });
+        
+        btn.addEventListener('touchcancel', () => {
+          window.keys[btn.dataset.action] = false;
+          btn.style.transform = 'translateY(0)';
+          btn.style.boxShadow = '0 5px 0 #c44';
+        });
+        
+        // Для десктопов
+        btn.addEventListener('mousedown', () => {
+          window.keys[btn.dataset.action] = true;
+          btn.style.transform = 'translateY(5px)';
+          btn.style.boxShadow = '0 0 0 #c44';
+        });
+        
+        btn.addEventListener('mouseup', () => {
+          window.keys[btn.dataset.action] = false;
+          btn.style.transform = 'translateY(0)';
+          btn.style.boxShadow = '0 5px 0 #c44';
+        });
+        
+        btn.addEventListener('mouseleave', () => {
+          window.keys[btn.dataset.action] = false;
+          btn.style.transform = 'translateY(0)';
+          btn.stylfe.boxShadow = '0 5px 0 #c44';
+        });
+      });
+      
+      // Определение мобильного устройства
+      function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      }
+      
+      // Скрываем старое управление на мобильных
+      if (isMobileDevice()) {
+        document.getElementById('mobile-controls').style.display = 'none';
+        showScreen('levelSelect');
+        loadLevelButtons();
+      }
+      
+    });
+  </script>
+</body>
+</html>

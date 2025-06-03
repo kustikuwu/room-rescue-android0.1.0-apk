@@ -1,0 +1,649 @@
+/* Общие стили */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+body {
+  margin: 0;
+  background: #0a1929 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect width="16" height="16" fill="%230d2235"/><path d="M0 0h8v8H0z" fill="%230a1929"/></svg>');
+  color: #e0f0ff;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  text-align: center;
+  user-select: none;
+  font-size: 12px;
+  line-height: 1.6;
+  text-shadow: 0 0 5px rgba(0, 200, 255, 0.5);
+}
+
+h1, h2 {
+  margin: 20px;
+  font-size: 1.8em;
+  color: #4af626;
+  text-shadow: 0 0 10px rgba(74, 246, 38, 0.7), 
+               0 0 20px rgba(74, 246, 38, 0.4),
+               3px 3px 0 #000;
+  letter-spacing: 1px;
+}
+
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+  justify-content: center;
+  background: rgba(10, 25, 41, 0.85);
+  box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.7);
+}
+
+.screen.active {
+  display: flex;
+}
+
+button {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 0.9em;
+  padding: 12px 24px;
+  margin: 15px;
+  background: #1a3a5a;
+  color: #e0f0ff;
+  border: 4px solid;
+  border-top-color: #2c5a8a;
+  border-left-color: #2c5a8a;
+  border-right-color: #0a223a;
+  border-bottom-color: #0a223a;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 6px 0 #0a223a;
+  transition: all 0.1s;
+  text-shadow: 0 0 5px rgba(0, 200, 255, 0.5);
+  letter-spacing: 1px;
+  z-index: 10;
+}
+
+button:hover:not(:disabled) {
+  background: #2a4a7a;
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 #0a223a;
+}
+
+button:active:not(:disabled) {
+  transform: translateY(6px);
+  box-shadow: 0 0 0 #0a223a;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+  box-shadow: 0 3px 0 #0a223a;
+}
+
+canvas {
+  display: block;
+  margin: 0 auto;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  max-height: 100%;
+  background: #0a1929;
+  image-rendering: pixelated;
+
+  border: 4px solid #2c5a8a;
+  border-image: repeating-linear-gradient(
+    45deg,
+    #2c5a8a,
+    #2c5a8a 4px,
+    #1a3a5a 4px,
+    #1a3a5a 8px
+  ) 4;
+
+  box-shadow: 
+    0 0 10px rgba(0, 100, 255, 0.5),
+    inset 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+
+progress {
+  width: 80%;
+  height: 24px;
+  margin-top: 15px;
+  appearance: none;
+  border: 3px solid #0a223a;
+  background: #1a3a5a;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+progress::-webkit-progress-bar {
+  background-color: #1a3a5a;
+  border: 2px solid #2c5a8a;
+}
+
+progress::-webkit-progress-value {
+  background: repeating-linear-gradient(
+    45deg,
+    #4af626,
+    #4af626 10px,
+    #3bd620 10px,
+    #3bd620 20px
+  );
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+  border-right: 2px solid #0a223a;
+}
+
+/* Адаптив */
+@media (max-width: 600px) {
+  button {
+    width: 90%;
+    font-size: 0.8em;
+    padding: 10px 15px;
+  }
+  
+  h1, h2 {
+    font-size: 1.4em;
+    margin: 15px 10px;
+  }
+  
+  progress {
+    width: 95%;
+    height: 20px;
+  }
+}
+
+/* Мобильное управление */
+#mobile-controls {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  justify-content: space-between;
+  padding: 0 25px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+#gameScreen.active #mobile-controls {
+  display: flex;
+}
+
+.dpad {
+  display: grid;
+  grid-template-areas:
+    ". up ."
+    "left . right"
+    ". down .";
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.btn-control[data-dir="up"] { grid-area: up; }
+.btn-control[data-dir="left"] { grid-area: left; }
+.btn-control[data-dir="right"] { grid-area: right; }
+.btn-control[data-dir="down"] { grid-area: down; }
+
+@media (max-width: 600px) {
+  .btn-control {
+    width: 65px;
+    height: 65px;
+    font-size: 24px;
+  }
+  
+  .btn-action {
+    width: 70px;
+    height: 70px;
+  }
+  
+  #mobile-controls {
+    bottom: 20px;
+    padding: 0 15px;
+  }
+}
+
+.btn-control {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a3a5a;
+  border: 4px solid;
+  border-top-color: #2c5a8a;
+  border-left-color: #2c5a8a;
+  border-right-color: #0a223a;
+  border-bottom-color: #0a223a;
+  border-radius: 8px;
+  box-shadow: 0 5px 0 #0a223a;
+  color: #e0f0ff;
+  font-size: 28px;
+  pointer-events: all;
+  transition: all 0.1s;
+}
+
+.btn-control:active {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 #0a223a;
+}
+
+.ab-buttons {
+  display: flex;
+  gap: 25px;
+  align-items: center;
+  pointer-events: all;
+}
+
+.btn-action {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a3a5a;
+  border: 4px solid;
+  border-top-color: #2c5a8a;
+  border-left-color: #2c5a8a;
+  border-right-color: #0a223a;
+  border-bottom-color: #0a223a;
+  border-radius: 50%;
+  box-shadow: 0 5px 0 #0a223a;
+  color: #e0f0ff;
+  font-size: 28px;
+  transition: all 0.1s;
+}
+
+.btn-action:active {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 #0a223a;
+}
+
+/* Кнопки уровней */
+#levelButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 450px;
+  gap: 12px;
+}
+
+#levelButtons button {
+  width: 240px;
+  margin: 5px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+#levelButtons button:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: 0.5s;
+}
+
+#levelButtons button:hover:after {
+  left: 100%;
+}
+
+@media (max-width: 600px) {
+  #levelButtons button {
+    width: 95%;
+  }
+}
+
+/* Сообщение о завершении уровня */
+.level-complete-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(10, 25, 41, 0.95);
+  padding: 35px;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 1000;
+  color: #4af626;
+  font-size: 1.4em;
+  border: 4px solid #4af626;
+  display: none;
+  box-shadow: 0 0 30px rgba(74, 246, 38, 0.5), 
+              inset 0 0 20px rgba(74, 246, 38, 0.3);
+  width: 85%;
+  max-width: 500px;
+  text-shadow: 0 0 10px rgba(74, 246, 38, 0.7);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 30px rgba(74, 246, 38, 0.5), inset 0 0 20px rgba(74, 246, 38, 0.3); }
+  50% { box-shadow: 0 0 50px rgba(74, 246, 38, 0.7), inset 0 0 30px rgba(74, 246, 38, 0.5); }
+  100% { box-shadow: 0 0 30px rgba(74, 246, 38, 0.5), inset 0 0 20px rgba(74, 246, 38, 0.3); }
+}
+
+.level-complete-message h2 {
+  margin-top: 0;
+  color: #4af626;
+  font-size: 1.8em;
+}
+
+#continueButton {
+  margin-top: 25px;
+  font-size: 1.1em;
+  padding: 12px 35px;
+  background: #4af626;
+  border: none;
+  border-radius: 0;
+  color: #0a223a;
+  cursor: pointer;
+  transition: background 0.3s;
+  text-shadow: none;
+  box-shadow: 0 5px 0 #3bd620;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+
+#continueButton:hover {
+  background: #3bd620;
+  transform: translateY(2px);
+  box-shadow: 0 3px 0 #2ac610;
+}
+
+#continueButton:active {
+  transform: translateY(5px);
+  box-shadow: 0 0 0 #2ac610;
+}
+
+/* Пиксельные декорации */
+.pixel-decoration {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: #4af626;
+  box-shadow: 0 0 10px rgba(74, 246, 38, 0.7);
+  opacity: 0.6;
+  z-index: 1;
+}
+
+/* Главное меню с неоновым эффектом */
+#mainMenu {
+  position: relative;
+}
+
+#mainMenu:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ff00cc, #3333ff, #00ccff, #ff00cc);
+  background-size: 300% 300%;
+  animation: neon-border 3s linear infinite;
+}
+
+@keyframes neon-border {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+/* Настройки */
+#settingsMenu {
+  border: 4px solid #2c5a8a;
+  box-shadow: inset 0 0 20px rgba(0, 50, 100, 0.5);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+#soundToggle {
+  position: relative;
+  -webkit-appearance: none;
+  width: 60px;
+  height: 30px;
+  background: #1a3a5a;
+  border: 3px solid #0a223a;
+  border-radius: 15px;
+  cursor: pointer;
+  margin: 0 10px;
+  vertical-align: middle;
+}
+
+#soundToggle:checked {
+  background: #4af626;
+}
+
+#soundToggle:before {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e0f0ff;
+  top: 1px;
+  left: 1px;
+  transition: 0.3s;
+  box-shadow: 0 0 5px rgba(0, 200, 255, 0.5);
+}
+
+#soundToggle:checked:before {
+  left: 31px;
+}
+
+/* Если нет пиксельного шрифта, используем существующий */
+#gameScreen .screen {
+  font-family: 'Press Start 2P', 'PixelFont', 'Courier New', monospace;
+}
+
+#coinDisplay {
+  position: absolute;
+  top: 72px; /* ниже кнопки */
+  left: 12px;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 2px solid #4af626;
+  z-index: 999;
+  color: #4af626;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  text-shadow: 0 0 4px rgba(74, 246, 38, 0.6);
+}
+
+
+/* Магазин — вкладки */
+#shopTabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.shop-tab-btn {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 0.7em;
+  padding: 10px 18px;
+  border: 3px solid #2c5a8a;
+  background: #1a3a5a;
+  color: #e0f0ff;
+  box-shadow: 0 4px 0 #0a223a;
+  cursor: pointer;
+  transition: all 0.1s;
+  text-shadow: 0 0 5px rgba(0, 200, 255, 0.5);
+}
+
+.shop-tab-btn:hover {
+  background: #2a4a7a;
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #0a223a;
+}
+
+.shop-tab-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #0a223a;
+}
+
+.shop-tab-btn.active {
+  border-color: #4af626;
+  background: #0f3a0f;
+  color: #4af626;
+  box-shadow: 0 4px 0 #2a7f2a;
+}
+
+/* Вкладки */
+.shop-tab {
+  display: none;
+}
+
+.shop-tab.active {
+  display: block;
+}
+
+#colorShop {
+  display: block;
+}
+
+#colorShop h3 {
+    font-family: 'Press Start 2P', monospace;
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+
+/* Сетка товаров */
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  max-width: 640px;          /* Ограничивает максимальную ширину */
+  margin: 0 auto;
+  width: 100%;               /* Чтобы занимало всю ширину контейнера */
+}
+
+
+/* Карточка товара */
+.shop-item {
+  background: rgba(10, 25, 41, 0.9);
+  border: 3px solid #2c5a8a;
+  padding: 12px;
+  text-align: center;
+  font-size: 12px;
+  width: 100%;               /* Растягивает в пределах сетки */
+  max-width: 110px;          /* Жёсткий предел по ширине */
+  box-sizing: border-box;    /* Учитывает padding в ширину */
+  box-shadow: inset 0 0 10px rgba(0, 100, 255, 0.2);
+}
+
+.shop-color-preview {
+  width: 32px;
+  height: 32px;
+  border: 2px solid #fff;
+  margin: 8px auto;
+  box-shadow: 0 0 5px rgba(255,255,255,0.3);
+}
+
+
+.shop-item button { 
+  font-size: 10px;
+  padding: 6px 12px;
+  margin-top: 6px;
+  border: 2px solid #2c5a8a;
+  background: #1a3a5a;
+  color: #e0f0ff;
+  box-shadow: 0 3px 0 #0a223a;
+  cursor: pointer;
+  transition: all 0.1s;
+}
+
+
+.shop-item button:hover {
+  background: #2a4a7a;
+}
+
+.shop-item button:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 #0a223a;
+}
+
+.shop-item button.selected {
+  background: #4af626;
+  color: #0a223a;
+  border-color: #4af626;
+  font-weight: bold;
+}
+
+.roulette-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 40px auto 20px;
+}
+
+.roulette-3slots {
+  display: flex;
+  flex-direction: row; /* ВАЖНО: делаем горизонтальную ориентацию */
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.slot {
+  width: 70px;
+  height: 70px;
+  border: 3px solid #999;
+  box-shadow: 0 0 5px rgba(255,255,255,0.3);
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+
+.arrow-marker {
+  font-size: 32px;
+  color: #4af626;
+  text-shadow: 0 0 10px #4af626;
+}
+
+.slot.rare {
+  border-color: gold;
+  box-shadow: 0 0 12px gold;
+}
+
+.slot.rare-temp {
+  border-color: orange;
+  box-shadow: 0 0 8px orange;
+}
+
+.color-category {
+  display: block;
+  max-width: 620px;
+  margin: 0 auto 40px;
+  padding: 0 10px;
+  text-align: center;
+}
+
+#trashProgress {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  max-width: 400px;
+  height: 20px;
+  z-index: 1000;
+}
+
+#backFromGame {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 6px 12px;
+  font-size: 10px;
+  z-index: 1000;
+}
+
